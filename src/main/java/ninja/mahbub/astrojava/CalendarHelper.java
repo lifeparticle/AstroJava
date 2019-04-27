@@ -13,19 +13,19 @@ import java.util.Date;
  *
  */
 public class CalendarHelper {
-	
-	public Calendar calendar = Calendar.getInstance();
-	
+
 	public int getDayOfYear (Calendar userCalendar) {
-		return userCalendar.get(Calendar.DAY_OF_YEAR); 
+		return userCalendar.get(Calendar.DAY_OF_YEAR);
 	}
 	
 	public int getDayOfYear () {
-		return getDayOfYear (calendar); 
+		Calendar calendar = Calendar.getInstance();
+		return getDayOfYear (calendar);
 	}
 	
 	public Calendar getCalendarDate(String userDate) {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		Calendar calendar = Calendar.getInstance();
 		Date date = null;
 		try {
 			date = sdf.parse(userDate);

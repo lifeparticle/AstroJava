@@ -6,26 +6,25 @@ package ninja.mahbub.astrojava;
 /**
  * @author Mahbub Zaman
  * 
- *         The algorithm is taken from
- *         http://edwilliams.org/sunrise_sunset_algorithm.htm
+ * The algorithm is taken from
+ * http://edwilliams.org/sunrise_sunset_algorithm.htm
  *
  */
 public class Main {
 
 	public static void main(String[] args) {
 
-
 		// Sydney
 		double latitude = -33.868;
 		double longitude = 151.21;
 		Sun sun = new Sun();
-		CalendarHelper clCalendarHelper = new CalendarHelper();
+		CalendarHelper calendarHelper = new CalendarHelper();
 
 		// 1. first calculate the day of the year
-		int dayOfYear = clCalendarHelper.getDayOfYear();
+		int dayOfYear = calendarHelper.getDayOfYear();
 		
-		int i = clCalendarHelper.getDayOfYear(clCalendarHelper.getCalendarDate("17-06-1991"));
-		
+		int i = calendarHelper.getDayOfYear(calendarHelper.getCalendarDate("17-06-1991"));
+
 		print(""+i);
 		
 		

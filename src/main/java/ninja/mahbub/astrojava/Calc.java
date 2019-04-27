@@ -8,6 +8,6 @@ package ninja.mahbub.astrojava;
  *
  */
 public class Calc {
-	final static double degreeToRadian = Math.PI / 180;
-	final static double radianToDegree = 180 / Math.PI;
+	final static double DEGREE_TO_RADIAN = Math.PI / 180;
+	final static double RADIAN_TO_DEGREE = 180 / Math.PI;
 }

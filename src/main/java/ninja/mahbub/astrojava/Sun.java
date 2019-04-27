@@ -54,8 +54,8 @@ public class Sun {
 	public double trueLongitude(double meanAnomaly) {
 		// L potentially needs to be adjusted into the range [0,360) by
 		// adding/subtracting 360
-		double L = meanAnomaly + (1.916 * Math.sin(meanAnomaly * Calc.degreeToRadian))
-				+ (0.020 * Math.sin(2 * meanAnomaly * Calc.degreeToRadian)) + 282.634;
+		double L = meanAnomaly + (1.916 * Math.sin(meanAnomaly * Calc.DEGREE_TO_RADIAN))
+				+ (0.020 * Math.sin(2 * meanAnomaly * Calc.DEGREE_TO_RADIAN)) + 282.634;
 
 		if (L > 360) {
 			L = L - 360;
@@ -69,7 +69,7 @@ public class Sun {
 	public double rightAscension(double trueLongitude) {
 		// RA potentially needs to be adjusted into the range [0,360) by
 		// adding/subtracting 360
-		double RA = Math.atan(0.91764 * Math.tan(trueLongitude * Calc.degreeToRadian));
+		double RA = Math.atan(0.91764 * Math.tan(trueLongitude * Calc.DEGREE_TO_RADIAN));
 		if (RA > 360) {
 			RA = RA - 360;
 		} else if (RA < 0) {
