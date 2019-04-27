@@ -1,7 +1,7 @@
 /**
  * 
  */
-package astro_java;
+package ninja.mahbub.astrojava;
 
 /**
  * @author Mahbub Zaman
@@ -13,9 +13,7 @@ package astro_java;
 public class Main {
 
 	public static void main(String[] args) {
-		
-		
-		
+
 
 		// Sydney
 		double latitude = -33.868;
@@ -23,8 +21,6 @@ public class Main {
 		Sun sun = new Sun();
 		CalendarHelper clCalendarHelper = new CalendarHelper();
 
-		
-		
 		// 1. first calculate the day of the year
 		int dayOfYear = clCalendarHelper.getDayOfYear();
 		

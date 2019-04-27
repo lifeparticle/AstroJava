@@ -1,7 +1,7 @@
 /**
  * 
  */
-package astro_java;
+package ninja.mahbub.astrojava;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

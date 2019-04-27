@@ -1,7 +1,7 @@
 /**
  * 
  */
-package astro_java;
+package ninja.mahbub.astrojava;
 
 /**
  * @author Mahbub Zaman
