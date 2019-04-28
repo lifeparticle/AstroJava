@@ -3,16 +3,9 @@
  */
 package ninja.mahbub.astrojava;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
 import static ninja.mahbub.astrojava.CalendarHelper.TIME_ZONE_UTC;
 
@@ -161,12 +154,12 @@ public class Sun {
 		// 8. calculate local mean time of rising/setting
 		double localMeanTime = localMeanTime(localHourAngle, rightAscension, approximateTime);
 		// 9. adjust back to UTC
-		long UT = toUTC(localMeanTime, lngHour);
+		long UTC = toUTC(localMeanTime, lngHour);
 		// 10. convert UT value to local time zone of latitude/longitude
-		String localTime = toLocalTimeZone(UT);
+		String localTime = toLocalTimeZone(UTC);
 
 		if (timeZone.equalsIgnoreCase(CalendarHelper.TIME_ZONE_UTC)) {
-			return ""+UT;
+			return ""+UTC;
 		} else if (timeZone.equalsIgnoreCase(CalendarHelper.TIME_ZONE_LOCAL)) {
 			return localTime;
 		}

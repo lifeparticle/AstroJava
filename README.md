@@ -36,12 +36,12 @@ sun.getSunset ("Dhaka", "Bangladesh", "28-04-2019", "UTC");  // 44708333
 ```
 **Errors**
 ```java
-/* If you are getting error like 'city not found' that means it's not in the city list
- * either use latitude and longitude or create an issue */
+/* If you're getting error like 'city not found' that means it's not in the city list
+* either use latitude and longitude or create an issue */
 sun.getSunrise ("Avalon", "Earth", "28-04-2019", "LOCAL"); // city not found
 
-/* If you are getting error like 'unparseable date' that means you're not
- * providing the date in a correct format */
+/* If you're getting error like 'unparseable date' that means you're not
+* providing the date in a correct format */
 sun.getSunrise ("Sydney", "Australia", "28-04-nnnn", "LOCAL"); // unparseable date
 ```
 ___
