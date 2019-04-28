@@ -3,59 +3,57 @@
  */
 package ninja.mahbub.astrojava;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
+import static ninja.mahbub.astrojava.CalendarHelper.TIME_ZONE_UTC;
+
 /**
  * @author Mahbub Zaman
- *
+ * The algorithm is taken from
+ * http://edwilliams.org/sunrise_sunset_algorithm.htm
  */
 public class Sun {
 
-	final static double degreeToRadian = Math.PI / 180;
+	final static String SUNRISE = "sunrise";
+	final static String SUNSET = "sunset";
+	// offical = 90 degrees 50'
+	final static double ZENITH = 90.8333;
 
-	public double getApproximateTimeByConvertingLongitudeToHour(double longitude, int dayOfYear, int constant) {
-		double lngHour = longitude / 15;
-		return (dayOfYear + ((constant - lngHour) / 24));
-	}
-	
 	CalendarHelper calendarHelper = new CalendarHelper();
 
-	public double getApproximateTimeForSunrise(double longitude, int dayOfYear) {
-		return getApproximateTimeByConvertingLongitudeToHour(longitude, dayOfYear, 6);
-	}
-	
-	public double getApproximateTimeForSunset(double longitude, int dayOfYear) {
-		return getApproximateTimeByConvertingLongitudeToHour(longitude, dayOfYear, 18);
-	}
-	
-	public String getSunrise(double latitude, double longitude, int dayOfYear) {
-		return "";
+	public double getLngHour(double longitude) {
+		return longitude / 15;
 	}
 
-	public String getSunrise(double latitude, double longitude) {
-		return getSunrise(latitude, longitude, calendarHelper.getDayOfYear());
+	public double getApproximateTimeByConvertingLongitudeToHour(double lngHour, int dayOfYear, int constant) {
+		return (dayOfYear + ((constant - lngHour) / 24));
 	}
 
-	public String getSunrise(String cityName, int dayOfYear) {
-		double latitude = 0;
-		double longitude = 0;
-		return getSunrise(latitude, longitude, dayOfYear);
+	public double getApproximateTimeForSunrise(double lngHour, int dayOfYear) {
+		return getApproximateTimeByConvertingLongitudeToHour(lngHour, dayOfYear, 6);
 	}
 
-	public String getSunrise(String cityName) {
-		double latitude = 0;
-		double longitude = 0;
-		return getSunrise(latitude, longitude, calendarHelper.getDayOfYear());
+	public double getApproximateTimeForSunset(double lngHour, int dayOfYear) {
+		return getApproximateTimeByConvertingLongitudeToHour(lngHour, dayOfYear, 18);
 	}
-
 
 	public double meanAnomaly(double approximateTime) {
 		return (0.9856 * approximateTime) - 3.289;
 	}
 
 	public double trueLongitude(double meanAnomaly) {
-		// L potentially needs to be adjusted into the range [0,360) by
-		// adding/subtracting 360
-		double L = meanAnomaly + (1.916 * Math.sin(meanAnomaly * Calc.DEGREE_TO_RADIAN))
-				+ (0.020 * Math.sin(2 * meanAnomaly * Calc.DEGREE_TO_RADIAN)) + 282.634;
+		// L potentially needs to be adjusted into the range [0,360) by adding/subtracting 360
+		double L = meanAnomaly + (1.916 * Math.sin(meanAnomaly * MathHelper.DEGREE_TO_RADIAN))
+				+ (0.020 * Math.sin(2 * meanAnomaly * MathHelper.DEGREE_TO_RADIAN)) + 282.634;
 
 		if (L > 360) {
 			L = L - 360;
@@ -67,9 +65,8 @@ public class Sun {
 	}
 
 	public double rightAscension(double trueLongitude) {
-		// RA potentially needs to be adjusted into the range [0,360) by
-		// adding/subtracting 360
-		double RA = Math.atan(0.91764 * Math.tan(trueLongitude * Calc.DEGREE_TO_RADIAN));
+		// RA potentially needs to be adjusted into the range [0,360) by adding/subtracting 360
+		double RA = MathHelper.RADIAN_TO_DEGREE * Math.atan(0.91764 * Math.tan(trueLongitude * MathHelper.DEGREE_TO_RADIAN));
 		if (RA > 360) {
 			RA = RA - 360;
 		} else if (RA < 0) {
@@ -87,36 +84,122 @@ public class Sun {
 
 	public double[] declination(double trueLongitude) {
 
-		double sinDec = 0.39782 * Math.sin(trueLongitude);
+		double sinDec = 0.39782 * Math.sin(trueLongitude * MathHelper.DEGREE_TO_RADIAN);
 		double cosDec = Math.cos(Math.asin(sinDec));
 
 		return new double[] { sinDec, cosDec };
 	}
 
-	public double localHourAngle(double sinDec, double cosDec, String method) {
-		/*
-		double cosH = (cos(zenith) - (sinDec * sin(latitude))) / (cosDec * cos(latitude))
-				
-		if (cosH >  1) 
-		  the sun never rises on this location (on the specified date)
-		if (cosH < -1)
-		  the sun never sets on this location (on the specified date)
+	public double localHourAngle(double sinDec, double cosDec, double latitude, String eventType) {
 
+		double cosH = (Math.cos(ZENITH * MathHelper.DEGREE_TO_RADIAN) - (sinDec * Math.sin(latitude * MathHelper.DEGREE_TO_RADIAN))) / (cosDec * Math.cos(latitude * MathHelper.DEGREE_TO_RADIAN));
+				
+		if (eventType.equalsIgnoreCase(SUNRISE) && cosH > 1) {
+			// the sun never rises on this location(on the specified date)
+
+		} else if (eventType.equalsIgnoreCase(SUNSET) && cosH < -1) {
+			// the sun never sets on this location(on the specified date)
+
+		}
 				  
 		// finish calculating H and convert into hours
-		double H;
-		if (method == "SUNRISE")
-			H = 360 - acos(cosH);
-		else if (method == "SUNSET")
-			H = acos(cosH);
-		else
-			
-			
-			
-			H = H / 15;
-			*/
-		
-		return 0;
+		double H = 0;
+		if (eventType.equalsIgnoreCase(SUNRISE))
+			H = 360 - MathHelper.RADIAN_TO_DEGREE * Math.acos(cosH);
+		else if (eventType.equalsIgnoreCase(SUNSET))
+			H = MathHelper.RADIAN_TO_DEGREE * Math.acos(cosH);
+
+		return H / 15;
 	}
 
+	public double localMeanTime(double localHourAngle, double rightAscension, double approximateTime) {
+		return localHourAngle + rightAscension - (0.06571 * approximateTime) - 6.622;
+	}
+
+	public long toUTC (double localMeanTime, double lngHour) {
+		double UT = localMeanTime - lngHour;
+        if (UT > 24) {
+            UT = UT - 24;
+        } else if (UT < 0) {
+            UT = UT + 24;
+        }
+		// convert to milliseconds
+        return (long) (UT * 3600 * 1000);
+	}
+
+	public String toLocalTimeZone (long ut) {
+        return (new SimpleDateFormat("hh:mm:ss a z")).format(new Date(ut));
+	}
+
+	public String commonCalc (double latitude, double longitude, String date, String eventType, String timeZone) {
+		// 1. first calculate the day of the year
+		int dayOfYear = calendarHelper.getDayOfYear(calendarHelper.getCalendarDate(date));
+		// 2. convert the longitude to hour value and calculate an approximate time
+		double lngHour = getLngHour(longitude);
+		double approximateTime = -1;
+		if (eventType.equals(SUNRISE)) {
+			approximateTime = getApproximateTimeForSunrise (lngHour, dayOfYear);
+		} else if (eventType.equals(SUNSET)) {
+			approximateTime = getApproximateTimeForSunset(lngHour, dayOfYear);
+		}
+		// 3. calculate the Sun's mean anomaly
+		double meanAnomaly = meanAnomaly(approximateTime);
+		// 4. calculate the Sun's true longitude
+		double trueLongitude = trueLongitude(meanAnomaly);
+		// 5. calculate the Sun's right ascension
+		double rightAscension = rightAscension(trueLongitude);
+		// 6. calculate the Sun's declination
+		double declination[] = declination(trueLongitude);
+		// 7. calculate the Sun's local hour angle
+		double localHourAngle = localHourAngle (declination[0], declination[1], latitude, eventType);
+		// 8. calculate local mean time of rising/setting
+		double localMeanTime = localMeanTime(localHourAngle, rightAscension, approximateTime);
+		// 9. adjust back to UTC
+		long UT = toUTC(localMeanTime, lngHour);
+		// 10. convert UT value to local time zone of latitude/longitude
+		String localTime = toLocalTimeZone(UT);
+
+		if (timeZone.equalsIgnoreCase(CalendarHelper.TIME_ZONE_UTC)) {
+			return ""+UT;
+		} else if (timeZone.equalsIgnoreCase(CalendarHelper.TIME_ZONE_LOCAL)) {
+			return localTime;
+		}
+		return "time zone not found";
+	}
+
+	public String getSunrise(double latitude, double longitude, String date, String timeZone) {
+		return commonCalc(latitude, longitude, date, SUNRISE, timeZone);
+	}
+
+	public String getSunrise(double latitude, double longitude, String timeZone) {
+		return getSunrise(latitude, longitude, calendarHelper.getTodaysDate());
+	}
+
+	public String getSunrise(String cityName, String countryName, String date, String timeZone) {
+		Cities cities = new Cities();
+		double latLong [] = cities.getLatLong(cityName, countryName);
+		if (latLong[0] == 91 && latLong[1] == 181) {
+			return "city not found";
+		} else {
+			return getSunrise(latLong[0], latLong[1], date, timeZone);
+		}
+	}
+
+	public String getSunrise(String cityName, String countryName, String timeZone) {
+		return getSunrise(cityName, countryName, calendarHelper.getTodaysDate(), timeZone);
+	}
+
+	public String getSunset(double latitude, double longitude, String date, String timeZone) {
+		return commonCalc(latitude, longitude, date, SUNSET, timeZone);
+	}
+
+	public String getSunset(String cityName, String countryName, String date, String timeZone) {
+		Cities cities = new Cities();
+		double latLong [] = cities.getLatLong(cityName, countryName);
+		if (latLong[0] == 91 && latLong[1] == 181) {
+			return "city not found";
+		} else {
+			return getSunset(latLong[0], latLong[1], date, timeZone);
+		}
+	}
 }
