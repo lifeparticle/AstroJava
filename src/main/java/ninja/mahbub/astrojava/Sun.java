@@ -133,7 +133,13 @@ public class Sun {
 
 	public String commonCalc (double latitude, double longitude, String date, String eventType, String timeZone) {
 		// 1. first calculate the day of the year
-		int dayOfYear = calendarHelper.getDayOfYear(calendarHelper.getCalendarDate(date));
+		Calendar calendar = calendarHelper.getCalendarDate(date);
+		int dayOfYear = 0;
+		if (calendar != null) {
+			dayOfYear = calendarHelper.getDayOfYear(calendar);
+		} else {
+			return "unparseable date";
+		}
 		// 2. convert the longitude to hour value and calculate an approximate time
 		double lngHour = getLngHour(longitude);
 		double approximateTime = -1;
@@ -172,7 +178,7 @@ public class Sun {
 	}
 
 	public String getSunrise(double latitude, double longitude, String timeZone) {
-		return getSunrise(latitude, longitude, calendarHelper.getTodaysDate());
+		return getSunrise(latitude, longitude, calendarHelper.getTodaysDate(), timeZone);
 	}
 
 	public String getSunrise(String cityName, String countryName, String date, String timeZone) {
@@ -193,6 +199,10 @@ public class Sun {
 		return commonCalc(latitude, longitude, date, SUNSET, timeZone);
 	}
 
+	public String getSunset(double latitude, double longitude, String timeZone) {
+		return getSunset(latitude, longitude, calendarHelper.getTodaysDate(), timeZone);
+	}
+
 	public String getSunset(String cityName, String countryName, String date, String timeZone) {
 		Cities cities = new Cities();
 		double latLong [] = cities.getLatLong(cityName, countryName);
@@ -202,4 +212,10 @@ public class Sun {
 			return getSunset(latLong[0], latLong[1], date, timeZone);
 		}
 	}
+
+	public String getSunset(String cityName, String countryName, String timeZone) {
+		return getSunset(cityName, countryName, calendarHelper.getTodaysDate(), timeZone);
+	}
+
+
 }

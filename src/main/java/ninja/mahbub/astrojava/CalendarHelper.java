@@ -28,14 +28,15 @@ public class CalendarHelper {
 	
 	public Calendar getCalendarDate(String userDate) {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = null;
 		Date date = null;
 		try {
 			date = sdf.parse(userDate);
+			calendar = Calendar.getInstance();
+			calendar.setTime(date);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		calendar.setTime(date);
 		return calendar;
 	}
 }
