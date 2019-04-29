@@ -18,6 +18,8 @@ public class Sun {
     final static String SUNSET = "sunset";
     // offical = 90 degrees 50'
     final static double ZENITH = 90.8333;
+    public boolean isSunRise;
+    public boolean isSunSet;
 
     CalendarHelper calendarHelper = new CalendarHelper();
 
@@ -83,16 +85,18 @@ public class Sun {
 
     public double localHourAngle(double sinDec, double cosDec, double latitude, String eventType) {
 
+        isSunRise = true;
+        isSunSet = true;
         double cosH = (Math.cos(ZENITH * MathHelper.DEGREE_TO_RADIAN) - (sinDec * Math.sin(latitude * MathHelper.DEGREE_TO_RADIAN))) / (cosDec * Math.cos(latitude * MathHelper.DEGREE_TO_RADIAN));
 
         if (eventType.equalsIgnoreCase(SUNRISE) && cosH > 1) {
             // the sun never rises on this location(on the specified date)
-            System.out.println("no sunrise");
-
+            // Polar night
+            isSunRise = false;
         } else if (eventType.equalsIgnoreCase(SUNSET) && cosH < -1) {
             // the sun never sets on this location(on the specified date)
-            // Polar night
-            System.out.println("no sunset");
+            // Polar day
+            isSunSet = false;
         }
 
         // finish calculating H and convert into hours
@@ -151,6 +155,13 @@ public class Sun {
         double declination[] = declination(trueLongitude);
         // 7. calculate the Sun's local hour angle
         double localHourAngle = localHourAngle(declination[0], declination[1], latitude, eventType);
+
+        if (!isSunRise) {
+            return "no sunrise";
+        } else if (!isSunSet) {
+            return "no sunset";
+        }
+
         // 8. calculate local mean time of rising/setting
         double localMeanTime = localMeanTime(localHourAngle, rightAscension, approximateTime);
         // 9. adjust back to UTC

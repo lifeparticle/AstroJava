@@ -39,4 +39,8 @@ public class CalendarHelper {
         }
         return calendar;
     }
+
+    public static String getDayLength (String sunRise, String sunSet) {
+        return "";
+    }
 }

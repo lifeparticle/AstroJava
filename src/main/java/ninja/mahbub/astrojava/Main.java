@@ -46,6 +46,14 @@ public class Main {
         print(sun.getSunrise("Kiruna", "Sweden", "29-06-2019", "LOCAL"));
         print(sun.getSunset("Kiruna", "Sweden", "29-06-2019", "LOCAL"));
 
+        print(sun.getSunrise("Kiruna", "Sweden", "12-12-2019", "LOCAL"));
+        print(sun.getSunset("Kiruna", "Sweden", "12-12-2019", "LOCAL"));
+
+        print("------------");
+
+        String sunRise = sun.getSunrise("Sydney", "Australia", "LOCAL");
+        String sunSet = sun.getSunset("Sydney", "Australia", "LOCAL");
+        print(CalendarHelper.getDayLength(sunRise, sunSet));
     }
 
     public static void print(String s) {
