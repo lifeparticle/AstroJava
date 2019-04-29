@@ -2,9 +2,9 @@
 
 AstroJava is a Java library for Android which provides access to Sunrise, Sunset, Moonrise, Moonset information.
 
-##Dependencies
+## Dependencies
 None
-##Installation
+## Installation
 Todo
 
 ##Documentation
@@ -14,7 +14,7 @@ Todo
 double latitude = -33.92;
 double longitude = 151.1852;
 ```
-###Sun 
+### Sun 
 To access today's data in Local time zone
 ```java
 Sun sun = new Sun();
@@ -68,7 +68,7 @@ sun.getSunrise ("Avalon", "Earth", "29-04-2019", "LOCAL"); // city not found
 sun.getSunrise ("Sydney", "Australia", "29/04/2019", "LOCAL"); // unparseable date
 ```
 
-###Moon
+### Moon
 To access today's data in Local time zone
 ```java
 Moon moon = new Moon();
@@ -76,11 +76,11 @@ moon.getSunrise(latitude, longitude);
 moon.getSunset(latitude, longitude);
 ```
 
-##Bug Reports and Feature Requests
+## Bug Reports and Feature Requests
 Please create an issue with as much information you can. Thank you.
 
-##Author
+## Author
 Mahbub Zaman (http://mahbub.ninja)
 
-##License
+## License
 MIT License
