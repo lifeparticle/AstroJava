@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package ninja.mahbub.astrojava;
 
