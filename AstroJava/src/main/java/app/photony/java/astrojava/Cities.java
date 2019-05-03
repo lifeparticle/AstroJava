@@ -1,4 +1,4 @@
-package ninja.mahbub.astrojava;
+package app.photony.java.astrojava;
 
 import java.io.BufferedReader;
 import java.io.File;

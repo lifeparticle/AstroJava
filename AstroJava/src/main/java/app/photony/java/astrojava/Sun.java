@@ -1,7 +1,4 @@
-/**
- *
- */
-package ninja.mahbub.astrojava;
+package app.photony.java.astrojava;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

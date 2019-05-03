@@ -1,8 +1,4 @@
-/**
- *
- */
-package ninja.mahbub.astrojava;
-
+package app.photony.java.astrojava;
 /**
  * @author Mahbub Zaman
  *
