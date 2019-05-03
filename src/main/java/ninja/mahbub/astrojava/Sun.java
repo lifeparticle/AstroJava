@@ -128,7 +128,7 @@ public class Sun {
         return (new SimpleDateFormat("hh:mm:ss a z")).format(new Date(utc));
     }
 
-    public String commonCalc(double latitude, double longitude, String date, String eventType, String timeZone) {
+    private String commonCalc(double latitude, double longitude, String date, String eventType, String timeZone) {
         // 1. first calculate the day of the year
         Calendar calendar = calendarHelper.getCalendarDate(date);
         int dayOfYear = 0;
@@ -173,12 +173,17 @@ public class Sun {
             return "" + UTC;
         } else if (timeZone.equalsIgnoreCase(CalendarHelper.TIME_ZONE_LOCAL)) {
             return localTime;
+        } else {
+            return localTime;
         }
-        return "time zone not found";
     }
 
     public String getSunrise(double latitude, double longitude, String date, String timeZone) {
-        return commonCalc(latitude, longitude, date, SUNRISE, timeZone);
+        if (latitude >= -91 && latitude <= 90 && longitude >= -180 && longitude <= 180) {
+            return commonCalc(latitude, longitude, date, SUNRISE, timeZone);
+        } else {
+            return "invalid latitude or longitude";
+        }
     }
 
     public String getSunrise(double latitude, double longitude, String timeZone) {

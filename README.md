@@ -10,6 +10,10 @@ Todo
 ## Documentation
 
 ```java
+/*
+* Latitude range from [-90, 90] 
+* Longitude range from [-180, 180]
+*/
 // Sydney, Australia
 double latitude = -33.92;
 double longitude = 151.1852;
@@ -57,23 +61,31 @@ sun.getSunrise("Kiruna", "Sweden", "29-12-2019", "LOCAL"); // no sunrise
 sun.getSunset("Kiruna", "Sweden", "29-12-2019", "LOCAL");  // 10:00:00 AM AEST
 ```
 
-**Errors**
-```java
-/* If you're getting error like 'city not found' that means it's not in the city list
-* either use latitude and longitude or create an issue */
-sun.getSunrise ("Avalon", "Earth", "29-04-2019", "LOCAL"); // city not found
-
-/* If you're getting error like 'unparseable date' that means you're not
-* providing the date in a correct format */
-sun.getSunrise ("Sydney", "Australia", "29/04/2019", "LOCAL"); // unparseable date
-```
-
 ### Moon
 To access today's data in Local time zone
 ```java
 Moon moon = new Moon();
 moon.getSunrise(latitude, longitude);
 moon.getSunset(latitude, longitude);
+```
+
+
+**Errors**
+```java
+/*
+* `invalid latitude or longitude` if either value of latitude or longitude is out of range
+*/
+sun.getSunrise(-92, 151.1852, "LOCAL"); // invalid latitude or longitude
+
+/* If you're getting error like 'city not found' that means it's not in the city list
+* either use latitude and longitude or create an issue
+*/
+sun.getSunrise ("Avalon", "Earth", "29-04-2019", "LOCAL"); // city not found
+
+/* If you're getting error like 'unparseable date' that means you're not
+* providing the date in a correct format
+*/
+sun.getSunrise ("Sydney", "Australia", "29/04/2019", "LOCAL"); // unparseable date
 ```
 
 ## Bug Reports and Feature Requests
