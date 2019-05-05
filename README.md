@@ -12,7 +12,7 @@ AstroJava is a Java library for Android which provides access to Sunrise, Sunset
 Please create an issue with as much information you can. Thank you.
 
 ## Author
-Mahbub Zaman (http://mahbub.ninja)
+Mahbub Zaman (https://mahbub.ninja)
 
 ## License
 MIT License

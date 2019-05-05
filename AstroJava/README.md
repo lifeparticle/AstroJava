@@ -106,7 +106,7 @@ sun.getSunrise ("Sydney", "Australia", "29/04/2019", "LOCAL"); // unparseable da
 Please create an issue with as much information you can. Thank you.
 
 ## Author
-Mahbub Zaman (http://mahbub.ninja)
+Mahbub Zaman (https://mahbub.ninja)
 
 ## License
 MIT License
