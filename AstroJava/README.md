@@ -69,6 +69,20 @@ moon.getSunrise(latitude, longitude);
 moon.getSunset(latitude, longitude);
 ```
 
+### Helper Methods
+```java
+/* 
+* get the the list of cities for
+* latitude and longitude data
+*/
+
+```
+```java
+Cities cities = new Cities();
+ArrayList<String> cityList = cities.getCities();
+print(cityList.toString());
+```
+
 
 **Errors**
 ```java

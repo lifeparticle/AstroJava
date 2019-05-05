@@ -1,6 +1,8 @@
 package app.photony.java.astrojava;
 
 
+import java.util.ArrayList;
+
 /**
  * @author Mahbub Zaman
  */
@@ -52,6 +54,12 @@ public class Main {
         String sunRise = sun.getSunrise("Sydney", "Australia", "LOCAL");
         String sunSet = sun.getSunset("Sydney", "Australia", "LOCAL");
         print(CalendarHelper.getDayLength(sunRise, sunSet));
+
+
+        print("------------");
+        Cities cities = new Cities();
+        ArrayList<String> cityList = cities.getCities();
+        print(cityList.toString());
     }
 
     public static void print(String s) {

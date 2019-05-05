@@ -14,16 +14,17 @@ import java.util.ArrayList;
 
 public class Cities {
 
-    public ArrayList<String> cities = new ArrayList<String>();
+    private ArrayList<String> cityList = new ArrayList<String>();
 
     public Cities() {
-        File file = new File("src/main/java/ninja/mahbub/astrojava/cities.txt");
+        // need to fix the path issue
+        File file = new File("AstroJava/src/main/java/app/photony/java/astrojava/cities.txt");
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String city;
             while (true) {
                 if (!((city = br.readLine()) != null))
                     break;
-                cities.add(city);
+                cityList.add(city);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -34,12 +35,16 @@ public class Cities {
 
     public double[] getLatLong(String cityName, String countryName) {
         String city[];
-        for (int i = 0; i < cities.size(); ++i) {
-            city = cities.get(i).split("/");
+        for (int i = 0; i < cityList.size(); ++i) {
+            city = cityList.get(i).split("/");
             if (cityName.equalsIgnoreCase(city[0]) && countryName.equalsIgnoreCase(city[3])) {
                 return new double[]{Double.parseDouble(city[1]), Double.parseDouble(city[2])};
             }
         }
         return new double[]{91, 181};
+    }
+
+    public ArrayList<String> getCities() {
+        return (ArrayList<String>) this.cityList.clone();
     }
 }

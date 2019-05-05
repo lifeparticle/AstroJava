@@ -176,6 +176,7 @@ public class Sun {
     }
 
     public String getSunrise(double latitude, double longitude, String date, String timeZone) {
+        // timezone chek
         if (latitude >= -91 && latitude <= 90 && longitude >= -180 && longitude <= 180) {
             return commonCalc(latitude, longitude, date, SUNRISE, timeZone);
         } else {
