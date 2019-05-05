@@ -2,25 +2,6 @@
 
 AstroJava is a Java library for Android which provides access to Sunrise, Sunset, Moonrise, Moonset information.
 
-## Dependencies
-None
-## Installation
-Add it in your root build.gradle at the end of repositories:
-```
-allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
-```
-Add the dependency
-```
-dependencies {
-		implementation 'com.github.lifeparticle:PhotonyLibs:0.1.2'
-	}
-```
-
 ## Documentation
 
 ```java
