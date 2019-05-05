@@ -5,7 +5,7 @@ None
 ## Installation
 Todo
 
-## 1. [AstroJava](https://github.com/lifeparticle/PhotonyLibs/blob/master/AstroJava/README.md)
+## 1. [AstroJava](https://github.com/lifeparticle/PhotonyLibs/tree/master/AstroJava)
 AstroJava is a Java library for Android which provides access to Sunrise, Sunset, Moonrise, Moonset information.
 
 ## Bug Reports and Feature Requests
