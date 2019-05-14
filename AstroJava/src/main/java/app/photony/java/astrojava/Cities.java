@@ -17,9 +17,11 @@ public class Cities {
     private ArrayList<String> cityList = new ArrayList<String>();
 
     public Cities() {
-        // need to fix the path issue
-        File file = new File("AstroJava/src/main/java/app/photony/java/astrojava/cities.txt");
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+
+        try {
+            // need to fix the path issue
+            File file = new File("AstroJava/src/main/res/cities.txt");
+            BufferedReader br = new BufferedReader(new FileReader(file));
             String city;
             while (true) {
                 if (!((city = br.readLine()) != null))
