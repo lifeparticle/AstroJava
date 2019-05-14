@@ -15,7 +15,7 @@ allprojects {
 Add the dependency
 ```
 dependencies {
-		implementation 'com.github.lifeparticle:PhotonyLibs:0.1.2'
+		implementation 'com.github.lifeparticle:PhotonyLibs:0.1.3'
 	}
 ```
 
