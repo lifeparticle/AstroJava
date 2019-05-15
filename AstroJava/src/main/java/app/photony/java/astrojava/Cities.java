@@ -20,7 +20,7 @@ public class Cities {
 
         try {
             // need to fix the path issue
-            File file = new File("AstroJava/src/main/res/cities.txt");
+            File file = new File("AstroJava/src/main/resources/cities.txt");
             BufferedReader br = new BufferedReader(new FileReader(file));
             String city;
             while (true) {
