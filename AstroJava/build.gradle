@@ -3,7 +3,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 group = 'com.github.lifeparticle'
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
 }
 
 sourceCompatibility = "7"
