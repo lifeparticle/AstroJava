@@ -1,4 +1,4 @@
-# PhotonyLibs
+# PhotonyLibs [development in progress]
 
 ## Dependencies
 None
